@@ -1,0 +1,62 @@
+// Pin definitions for relay connections
+#define RELAY_1 2
+#define RELAY_2 3
+#define RELAY_3 4
+#define RELAY_4 5
+
+// Bluetooth Serial Communication
+char receivedData;
+
+void setup() {
+  // Initialize relay pins as OUTPUT
+  pinMode(RELAY_1, OUTPUT);
+  pinMode(RELAY_2, OUTPUT);
+  pinMode(RELAY_3, OUTPUT);
+  pinMode(RELAY_4, OUTPUT);
+
+  // Start serial communication at 9600 baud rate
+  Serial.begin(9600);
+
+  // Turn off all relays at startup
+  digitalWrite(RELAY_1, LOW);
+  digitalWrite(RELAY_2, LOW);
+  digitalWrite(RELAY_3, LOW);
+  digitalWrite(RELAY_4, LOW);
+}
+
+void loop() {
+  // Check if data is received from Bluetooth
+  if (Serial.available() > 0) {
+    receivedData = Serial.read(); // Read the incoming data
+
+    switch (receivedData) {
+      case '1': // Turn ON Relay 1
+        digitalWrite(RELAY_1, HIGH);
+        break;
+      case '2': // Turn OFF Relay 1
+        digitalWrite(RELAY_1, LOW);
+        break;
+      case '3': // Turn ON Relay 2
+        digitalWrite(RELAY_2, HIGH);
+        break;
+      case '4': // Turn OFF Relay 2
+        digitalWrite(RELAY_2, LOW);
+        break;
+      case '5': // Turn ON Relay 3
+        digitalWrite(RELAY_3, HIGH);
+        break;
+      case '6': // Turn OFF Relay 3
+        digitalWrite(RELAY_3, LOW);
+        break;
+      case '7': // Turn ON Relay 4
+        digitalWrite(RELAY_4, HIGH);
+        break;
+      case '8': // Turn OFF Relay 4
+        digitalWrite(RELAY_4, LOW);
+        break;
+      default:
+        Serial.println("Invalid Command");
+        break;
+    }
+  }
+}
